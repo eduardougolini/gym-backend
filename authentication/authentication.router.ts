@@ -2,7 +2,7 @@ import { Router } from '../common/router'
 import * as restify from 'restify'
 import { User } from '../users/users.model'
 
-class UsersRouter extends Router {
+class AuthenticationRouter extends Router {
 
     constructor() {
         super();
@@ -31,10 +31,11 @@ class UsersRouter extends Router {
         });
 
         application.post('/register', (req, resp, next) => {
+            req.body.daysWithoutTraining = '0';
             let user = new User(req.body);
             user.save().then(this.render(resp, next));
         });
     }
 }
 
-export const usersRouter = new UsersRouter();
+export const authenticationRouter = new AuthenticationRouter();

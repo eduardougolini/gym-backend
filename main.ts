@@ -1,9 +1,11 @@
 import { Server } from './server/server';
-import { usersRouter } from './authentication/authentication.router';
+import { authenticationRouter } from './authentication/authentication.router';
+import { usersRouter } from './users/users.router';
 
 const server = new Server();
 server.bootstrap([
-    usersRouter
+    usersRouter,
+    authenticationRouter
 ]).then(server => {
     console.log('Server: ', server.application.address());
 }).catch(err => {
