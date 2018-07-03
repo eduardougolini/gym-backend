@@ -1,6 +1,7 @@
 import { Router } from '../common/router'
 import * as restify from 'restify'
 import { UserMeal } from './userMeals.model';
+import { UserExercise } from './userExercises.model';
 
 class UsersRouter extends Router {
     applyRoutes(application: restify.Server) {
@@ -14,9 +15,23 @@ class UsersRouter extends Router {
             UserMeal.find({
                 ...filterData
             }).exec((err, userMeal) => {
-                console.log(userMeal)
                 if (userMeal) {
                     resp.json(userMeal);
+                } else {
+                    resp.send(404);
+                }
+
+                return next();
+            });
+        });
+
+        application.get('/getExercises', (req, resp, next) => {
+            let filterData = req.query;
+            UserExercise.find({
+                ...filterData
+            }).exec((err, userExercises) => {
+                if (userExercises) {
+                    resp.json(userExercises);
                 } else {
                     resp.send(404);
                 }

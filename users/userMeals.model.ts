@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export interface UserMeal extends mongoose.Document {
-    userId: string,
+    user: string,
     fats: number,
     carbs: number,
     proteins: number,
