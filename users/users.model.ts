@@ -7,7 +7,8 @@ export interface User extends mongoose.Document {
     age: number,
     daysWithoutTraining: number,
     weight: number,
-    height: number
+    height: number,
+    userImage: String
 }
 
 const userSchema = new mongoose.Schema({
@@ -33,6 +34,10 @@ const userSchema = new mongoose.Schema({
     },
     height: {
         type: Number
+    },
+    userImage: {
+        type: String,
+        required: false
     }
 });
 
