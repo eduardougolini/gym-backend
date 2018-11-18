@@ -43,7 +43,28 @@ class UsersRouter extends Router {
 
                 return next();
             });
-        })
+        });
+
+        application.put('/updateUserInfo', (req, resp, next) => {
+            let userId = req.body['userId'];
+            let weight = req.body['weight'];
+            let userImage = req.body['userImage'];
+            console.log(weight)
+
+            User.update({_id: userId}, {
+                weight,
+                userImage
+            }).exec((err, userData) => {
+                if (userData) {
+                    return User.findById(userId)
+                } else {
+                    resp.send(404)
+                }
+            }).then(user => {
+                resp.json(user)
+                return next()
+            });
+        });
 
         application.get('/getExercises', (req, resp, next) => {
             let filterData = req.query;
