@@ -2,6 +2,7 @@ import { Router } from '../common/router'
 import * as restify from 'restify'
 import { UserMeal } from './userMeals.model';
 import { UserExercise } from './userExercises.model';
+import { User } from '../users/users.model'
 
 class UsersRouter extends Router {
     applyRoutes(application: restify.Server) {
@@ -24,6 +25,25 @@ class UsersRouter extends Router {
                 return next();
             });
         });
+
+        application.get('/getTmb', (req, resp, next) => {
+            let userId = req.query['userId'];
+            
+            User.findById(
+                userId
+            ).exec((err, userData) => {
+                if (userData) {
+                    let tmb = parseInt((66 + (13.7 * userData.weight) + (5.0 * userData.height) - (6.8 * userData.age)) + 1000);
+                    resp.json({
+                        tmb
+                    });
+                } else {
+                    resp.send(404);
+                }
+
+                return next();
+            });
+        })
 
         application.get('/getExercises', (req, resp, next) => {
             let filterData = req.query;
