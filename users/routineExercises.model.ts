@@ -10,7 +10,7 @@ export interface RoutineExercise extends mongoose.Document {
 
 const routineExerciseSchema = new mongoose.Schema({
     routine: {
-        type: Number,
+        type: String,
         required: true
     },
     name: {
@@ -21,6 +21,9 @@ const routineExerciseSchema = new mongoose.Schema({
     },
     alreadyTrained: {
         type: Boolean
+    },
+    exerciseImage:{
+        type: String
     }
 });
 

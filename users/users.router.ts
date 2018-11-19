@@ -88,6 +88,27 @@ class UsersRouter extends Router {
             });
         });
 
+        application.post('/addExerciseToRoutine', (req, resp, next) => {
+            let routineExercise = new RoutineExercise(req.body);
+            routineExercise.save().then(this.render(resp, next));
+        });
+
+        application.get('/getRoutineExercises', (req, resp, next) => {
+            let filterData = req.query;
+            
+            RoutineExercise.find({
+                ...filterData
+            }).exec((err, userRoutine) => {
+                if (userRoutine) {
+                    resp.json(userRoutine);
+                } else {
+                    resp.send(404);
+                }
+
+                return next();
+            });
+        });
+
     }
 }
 
