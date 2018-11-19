@@ -48,7 +48,7 @@ export class Server {
  
                 const cors = corsMiddleware({
                 preflightMaxAge: 5, //Optional
-                origins: ['http://localhost:8080', 'http://192.168.5.111:8080'],
+                origins: ['http://localhost:8080', 'http://192.168.5.111:8080', 'http://app.oincriveleduardo.com.br'],
                 allowHeaders: ['API-Token'],
                 exposeHeaders: ['API-Token-Expiry']
                 })
