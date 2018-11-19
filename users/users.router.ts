@@ -1,8 +1,9 @@
 import { Router } from '../common/router'
 import * as restify from 'restify'
 import { UserMeal } from './userMeals.model';
-import { UserExercise } from './userExercises.model';
-import { User } from '../users/users.model'
+import { UserRoutine } from './userRoutines.model'
+import { RoutineExercise } from './routineExercises.model';
+import { User } from './users.model'
 
 class UsersRouter extends Router {
     applyRoutes(application: restify.Server) {
@@ -66,13 +67,19 @@ class UsersRouter extends Router {
             });
         });
 
-        application.get('/getExercises', (req, resp, next) => {
+        application.post('/createRoutine', (req, resp, next) => {
+            let userRoutine = new UserRoutine(req.body);
+            userRoutine.save().then(this.render(resp, next));
+        });
+
+        application.get('/getUserRoutines', (req, resp, next) => {
             let filterData = req.query;
-            UserExercise.find({
+            
+            UserRoutine.find({
                 ...filterData
-            }).exec((err, userExercises) => {
-                if (userExercises) {
-                    resp.json(userExercises);
+            }).exec((err, userRoutine) => {
+                if (userRoutine) {
+                    resp.json(userRoutine);
                 } else {
                     resp.send(404);
                 }
@@ -80,6 +87,7 @@ class UsersRouter extends Router {
                 return next();
             });
         });
+
     }
 }
 
